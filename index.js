@@ -3,6 +3,9 @@ const path = require('path')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+
+
 mongoose
   .connect('mongodb://127.0.0.1:27017/test')
   .then((x) => {
@@ -12,7 +15,11 @@ mongoose
     console.error('Error connecting to mongo', err.reason)
   })
 const bookRoute = require('./routes/book.routes')
+const loginRoutes = require('./routes/loginRoutes')
 const app = express()
+
+
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
@@ -24,6 +31,9 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, 'dist/angular-mean-crud-tutorial')))
 // API root
 app.use('/api', bookRoute)
+
+
+app.use('/login', loginRoutes)
 // PORT
 const port = process.env.PORT || 8000
 app.listen(port, () => {
@@ -31,7 +41,7 @@ app.listen(port, () => {
 })
 // 404 Handler
 app.use((req, res, next) => {
-  next(createError(404))
+ // next(createError(404))
 })
 // Base Route
 app.get('/', (req, res) => {

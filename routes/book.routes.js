@@ -1,12 +1,33 @@
 const express = require('express');
 const app = express();
 const bookRoute = express.Router();
+const loginRoutes = express.Router();
 let Book = require('../model/Book');
-// Add Book
+const jwt=require('jsonwebtoken')
+let Login=require('../model/login')
+
+
+
+//Add Login 
+
+
+  /*if (post.username ===  && post.password === 'johnspassword') {
+    req.session.user_id = johns_user_id_here;
+    res.redirect('/my_secret_page');
+  } else {
+    
+
+  let data=new Book(req.body);
+  let result=await data.save();
+  })*/
+
+
+// Add  Book
 bookRoute.route('/add-book').post(async(req,resp)=>{
   let data=new Book(req.body);
   let result=await data.save();
   })
+  
 // Get all Book
 bookRoute.route('/').get(async(req,resp)=>{
   let result=await Book.find({});
