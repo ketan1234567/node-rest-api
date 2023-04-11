@@ -5,6 +5,7 @@ const loginRoutes = express.Router();
 let Book = require('../model/Book');
 const jwt=require('jsonwebtoken')
 let Login=require('../model/login')
+const {authenticateToken}=require("../middleware.js")
 
 
 
@@ -27,11 +28,12 @@ bookRoute.route('/add-book').post(async(req,resp)=>{
   let data=new Book(req.body);
   let result=await data.save();
   })
-  
+
 // Get all Book
-bookRoute.route('/').get(async(req,resp)=>{
+bookRoute.route('/').get(authenticateToken,async(req,resp)=>{
   let result=await Book.find({});
   resp.send(result);
+  
 })
 // Get Book
 bookRoute.route('/read-book/:id').get(async(req,resp)=>{

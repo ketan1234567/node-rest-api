@@ -5,11 +5,7 @@ let Book = require('../model/Book');
 const jwt=require('jsonwebtoken')
 let Login=require('../model/login');
 const login = require('../model/login');
-
-
-
 //Add Login 
-
 loginRoutes.route('/userlogin').post(async(req, res)=>{
    // let data=new Login(req.body);
 
@@ -22,11 +18,11 @@ loginRoutes.route('/userlogin').post(async(req, res)=>{
     
  if (result[0].username===username && result[0].password===password) {
    
-    const token = jwt.sign({username:username},secretkey,{expiresIn:"1800s"})
+  const token = jwt.sign({username:username},secretkey,{expiresIn:"1800s"})
     console.log(token)
-    res.cookie('token', token , { maxAge:900000,  httpOnly:true})
     
-    res.redirect('/book-list')
+    res.cookie('token', token , { maxAge:900000,  httpOnly:true})
+    res.send('');
    
   } else {
     console.log("This is Error");
